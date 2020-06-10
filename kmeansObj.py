@@ -42,6 +42,7 @@ class KmeansObj:
         fit kmeans model in order to get the model params and centroids to store in DB
         '''
         self.kmeans_model = KMeans(n_clusters=self.k,random_state=self.random_state).fit(self.tracks_features_df_to_cluster)
+        
 
 
     
