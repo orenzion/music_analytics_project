@@ -24,6 +24,8 @@ class MyDBObject:
             
             if self.conn:
                 print("db connected")
+                # set encoding
+                self.conn.set_character_set('utf8')
         
         except MySQLdb._exceptions.Error as err:
             print("connection error:", err.args[0], err.args[1])
