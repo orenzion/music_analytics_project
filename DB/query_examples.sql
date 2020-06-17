@@ -65,3 +65,18 @@ from audio_features af join (select pt1.track_id
 													order by count(pt1.track_id) desc
 													limit 1)) pct
 on af.track_id = pct.track_id;
+
+
+-- top hits by country playlists and track ids
+select p.playlist_name, pt.playlist_id, pt.track_id
+from playlists p join playlists_tracks pt
+on p.playlist_id = pt.playlist_id
+where p.playlist_name like 'Top Hits%';
+
+
+
+-- top hits by country playlists, track ids and audio features
+select p.playlist_name, pt.playlist_id, af.*
+from playlists p join playlists_tracks pt join audio_features af
+on p.playlist_id = pt.playlist_id and pt.track_id = af.track_id
+where p.playlist_name like 'Top Hits%';
