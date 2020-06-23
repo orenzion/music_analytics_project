@@ -141,6 +141,21 @@ class MyDBObject:
 
         print("inserted", inserted_rows, "rows to 'kmeans_clustering_centroids' table")
 
+    
+    def insert_artist_and_artistgenres_to_db(self,artist):
+        # insert to artists
+        q = """INSERT IGNORE INTO artists VALUES ("%s","%s",%d,%d,"%s")""" \
+            %(artist['id'],artist['name'],artist['followers'],artist['popularity'],self.datetime_now)
+        inserted_rows = self.execute_query(q)
+        print("inserted", inserted_rows, "rows to 'artists' table")
+
+        # insert to artist_genres
+        inserted_rows = 0
+        for genre in artist['genres']:
+            q = """INSERT IGNORE INTO artist_genres VALUES ("%s","%s")""" \
+                %(artist['id'],genre)
+            inserted_rows += self.execute_query(q)
+        print("inserted", inserted_rows, "rows to 'artist_genres' table")
 
 
 

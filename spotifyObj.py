@@ -45,4 +45,9 @@ class SpotifyObj:
         playlist_tracks_audio_features = self.sp.audio_features(tids)
         return playlist_tracks_audio_features
 
+    
+    def get_artist(self, artist_id):
+        artist = self.sp.artist(artist_id)
+        return artist
+
 
