@@ -145,7 +145,7 @@ class MyDBObject:
     def insert_artist_and_artistgenres_to_db(self,artist):
         # insert to artists
         q = """INSERT IGNORE INTO artists VALUES ("%s","%s",%d,%d,"%s")""" \
-            %(artist['id'],artist['name'],artist['followers'],artist['popularity'],self.datetime_now)
+            %(artist['id'],artist['name'],artist['followers']['total'],artist['popularity'],self.datetime_now)
         inserted_rows = self.execute_query(q)
         print("inserted", inserted_rows, "rows to 'artists' table")
 
