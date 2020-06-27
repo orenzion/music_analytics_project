@@ -80,3 +80,12 @@ select p.playlist_name, pt.playlist_id, af.*
 from playlists p join playlists_tracks pt join audio_features af
 on p.playlist_id = pt.playlist_id and pt.track_id = af.track_id
 where p.playlist_name like 'Top Hits%';
+
+
+-- get distinct genres
+select ag.genre, count(*) as total
+from artist_genres ag
+group by ag.genre
+order by total desc
+
+-- get the music features of track: Bridges by koresma
