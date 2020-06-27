@@ -86,6 +86,20 @@ where p.playlist_name like 'Top Hits%';
 select ag.genre, count(*) as total
 from artist_genres ag
 group by ag.genre
-order by total desc
+order by total desc;
 
--- get the music features of track: Bridges by koresma
+-- get the tempo of track: Bridges by koresma
+select af.tempo
+from audio_features af 
+where af.track_id = '5GiEgcvmqbD1WgHzICDvOb';
+
+-- get a list of ids of the artists from the db that their top tracks by the given country were not extracted yet
+-- the way to do it: all artirst ids minus artist ids that their tracks where extracted from the given country
+select a.artist_id
+from artists a 
+where a.artist_id not in (select att.artist_id
+						  from artsts_top_tracks att
+                          where att.country = 'US');
+                          
+                          
+

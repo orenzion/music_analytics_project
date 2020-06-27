@@ -52,6 +52,19 @@ class MyDBObject:
         else:
             return res
             
+    def fetch_query(self,query):
+        '''
+        fetch a given query and monitor results
+        '''
+        try:
+            num_rows = self.cur.execute(query)
+            self.conn.commit()
+        except MySQLdb._exceptions.Error as err:
+            print("last query executed:", self.cur._last_executed)
+            print("execute query error:", err.args[0], err.args[1])
+            exit(1)
+        else:
+            return num_rows, self.cur.fetchall()
     ###################################################################################
     ########################### CLASS METHODS #########################################
     ###################################################################################
@@ -156,6 +169,34 @@ class MyDBObject:
                 %(artist['id'],genre)
             inserted_rows += self.execute_query(q)
         print("inserted", inserted_rows, "rows to 'artist_genres' table")
+
+
+    def insert_artists_top_tracks_and_audio_features_to_db(self, artists_ids, country = 'US'):
+        '''
+        get a list of ids of the artists from the db that their top tracks by the given country were not extracted yet
+        '''
+        pass
+
+    def fetch_artists_ids_without_top_tracks_by_country(self,country = 'US'):
+        '''
+        get a list of ids of the artists from the db that their top tracks by the given country were not extracted yet
+        '''
+        q = '''select a.artist_id
+                from artists a 
+                where a.artist_id not in (select att.artist_id
+                from artists_top_tracks att
+                where att.country = "%s")''' %country
+
+        num_rows_fetched, res = self.fetch_query(q)
+        
+        print("fetched:",num_rows_fetched, "artists ids")
+
+        return [item[0] for item in res]
+
+        
+
+
+
 
 
 
