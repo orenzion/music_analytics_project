@@ -27,4 +27,5 @@ The [analytics](https://github.com/orenzion/music_analytics_project/tree/master/
 ## DataBase:
 * DB used in this project - MySQL
 * Tables and schema can be found in DB folder 
+* Check out [query_examples.sql](https://github.com/orenzion/music_analytics_project/blob/master/DB/query_examples.sql) to get a better understanting of the DB.
 
