@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # check if artist_id was given by user
     if len(sys.argv) == 2:
         # fetch artist_id
-        county = sys.argv[1]
+        country = sys.argv[1]
     else:
         print("country was not given")
         exit(1)
@@ -26,11 +26,11 @@ if __name__ == '__main__':
 
 
 
-    artists_ids = db.fetch_artists_ids_without_top_tracks_by_country(county)
+    artists_ids = db.fetch_artists_ids_without_top_tracks_by_country(country)
 
-    artists_top_tracks, artists_tracks_audio_features = sp.get_artists_top_tracks_and_audio_features(artists_ids, county)
+    artists_top_tracks, artists_tracks_audio_features = sp.get_artists_top_tracks_and_audio_features(artists_ids, country)
 
-    db.insert_artists_top_tracks_and_audio_features_to_db(artists_ids, artists_top_tracks, artists_tracks_audio_features)
+    db.insert_artists_top_tracks_and_audio_features_to_db(artists_ids, artists_top_tracks, artists_tracks_audio_features,country)
 
 
 

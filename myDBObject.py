@@ -173,7 +173,7 @@ class MyDBObject:
 
     
 
-    def fetch_artists_ids_without_top_tracks_by_country(self,country = 'US'):
+    def fetch_artists_ids_without_top_tracks_by_country(self,country):
         '''
         get a list of ids of the artists from the db that their top tracks by the given country were not extracted yet
         '''
@@ -190,7 +190,7 @@ class MyDBObject:
         return [item[0] for item in res]
 
 
-    def insert_artists_top_tracks_and_audio_features_to_db(self,artists_ids , artists_top_tracks, artists_tracks_audio_features, country = 'US'):
+    def insert_artists_top_tracks_and_audio_features_to_db(self,artists_ids , artists_top_tracks, artists_tracks_audio_features, country):
         '''
         get a list of artists_top_tracks and a list of artists_tracks_audio_features and a country and insert to DB
         '''
