@@ -51,3 +51,22 @@ class SpotifyObj:
         return artist
 
 
+    def get_artist_top_tracks_and_audio_features(self,artist_id, county='US'):
+        artist_top_tracks = self.sp.artist_top_tracks(artist_id,county)
+        track_ids = [track['id'] for track in artist_top_tracks['tracks']]
+        tracks_audio_features = self.sp.audio_features(track_ids)
+
+        return artist_top_tracks, tracks_audio_features
+
+    def get_artists_top_tracks_and_audio_features(self, artists_ids, county = 'US'):
+        artists_top_tracks = []
+        artists_tracks_audio_features = []
+        for artist_id in artists_ids:
+            artist_top_tracks, tracks_audio_features = self.get_artist_top_tracks_and_audio_features(artist_id,county)
+            artists_top_tracks.append(artist_top_tracks)
+            artists_tracks_audio_features.append(tracks_audio_features)
+
+        return artists_top_tracks, artists_tracks_audio_features
+
+
+

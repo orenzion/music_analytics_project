@@ -171,11 +171,7 @@ class MyDBObject:
         print("inserted", inserted_rows, "rows to 'artist_genres' table")
 
 
-    def insert_artists_top_tracks_and_audio_features_to_db(self, artists_ids, country = 'US'):
-        '''
-        get a list of ids of the artists from the db that their top tracks by the given country were not extracted yet
-        '''
-        pass
+    
 
     def fetch_artists_ids_without_top_tracks_by_country(self,country = 'US'):
         '''
@@ -192,6 +188,36 @@ class MyDBObject:
         print("fetched:",num_rows_fetched, "artists ids")
 
         return [item[0] for item in res]
+
+
+    def insert_artists_top_tracks_and_audio_features_to_db(self,artists_ids , artists_top_tracks, artists_tracks_audio_features, country = 'US'):
+        '''
+        get a list of artists_top_tracks and a list of artists_tracks_audio_features and a country and insert to DB
+        '''
+        inserted_rows_artists_top_tracks = 0
+        inserted_rows_artists_top_tracks_audio_features = 0
+
+        for i in range(len(artists_ids)):
+            artist_id = artists_ids[i]
+            artist_top_tracks = artists_top_tracks[i]
+            artist_tracks_audio_features = artists_tracks_audio_features[i]
+
+            for j in range(len(artist_top_tracks['tracks'])):
+                artist_top_track = artist_top_tracks['tracks'][j]
+                q = """INSERT IGNORE INTO artists_top_tracks VALUES ("%s","%s","%s","%s")""" \
+                    %(artist_id ,artist_top_track['id'], country, artist_top_track['name'])
+                inserted_rows_artists_top_tracks += self.execute_query(q)
+
+                track_audio_features = artist_tracks_audio_features[j]
+                q = """INSERT IGNORE INTO audio_features VALUES ('%s',%f,%f,%d,%f,%d,%f,%f,%f,%f,%f,%f,%d,%d,%d,%d,"%s")""" \
+                    %(track_audio_features['id'],track_audio_features['danceability'],track_audio_features['energy'],track_audio_features['key'],track_audio_features['loudness'], \
+                    track_audio_features['mode'], track_audio_features['speechiness'], track_audio_features['acousticness'],track_audio_features['instrumentalness'], \
+                    track_audio_features['liveness'],track_audio_features['valence'],track_audio_features['tempo'],track_audio_features['duration_ms'],track_audio_features['time_signature'], \
+                    -1,artist_top_track['popularity'],self.datetime_now)
+                inserted_rows_artists_top_tracks_audio_features += self.execute_query(q)
+
+        print("inserted", inserted_rows_artists_top_tracks, "rows to 'artists_top_tracks' table")
+        print("inserted", inserted_rows_artists_top_tracks_audio_features, "rows to 'audio_features' table")
 
         
 
