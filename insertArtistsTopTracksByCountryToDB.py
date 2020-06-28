@@ -6,7 +6,7 @@ import sys
 
 if __name__ == '__main__':
     '''
-    this program takes a country (like 'US', 'IL'), looks for the artists that their top tracks were not inserted and
+    this program takes a country (like 'US', 'IL'), looks for the artists that their top tracks were not inserted yet and
     inserts their top tracks and audio features to the db. 
     '''
 
@@ -25,10 +25,14 @@ if __name__ == '__main__':
     sp = spotifyObj.SpotifyObj()
 
 
+
     artists_ids = db.fetch_artists_ids_without_top_tracks_by_country(county)
 
-    for id in artists_ids:
-        print(id)
+    artists_top_tracks, artists_tracks_audio_features = sp.get_artists_top_tracks_and_audio_features(artists_ids, county)
+
+    db.insert_artists_top_tracks_and_audio_features_to_db(artists_ids, artists_top_tracks, artists_tracks_audio_features)
+
+
 
     
 
